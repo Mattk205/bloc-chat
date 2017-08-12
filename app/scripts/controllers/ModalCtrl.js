@@ -18,8 +18,7 @@
             var modelInstance = $uibModalInstance.close('close');
         };
 
-        /**
-        * @function closeModal
+      /*git   * @function closeModal
         * @desc closes the modal
         */
         this.closeModal = function () {
