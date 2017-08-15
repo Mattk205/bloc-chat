@@ -14,7 +14,6 @@
         rooms.$remove(room);
     }
 
-    console.log(Room);
     return Room;
   }
 

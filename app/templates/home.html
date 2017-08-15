@@ -1,9 +1,26 @@
-<h1>Bloc Chat</h1>
+
 <main class="home-view">
-    <ul class="home-view-room-list">
+  <div class="row">
+    <div class="col-md-2">
+      <h1 class="home-title">Bloc Chat</h1>
+      <ul class="home-view-room-list">
         <li class="home-view-room-item" ng-repeat="room in home.rooms track by $index">
-            {{ room.$value }}
+            <a class="room-name" ng-click="home.activeRoom(room)">{{ room.$value }} </a>
         </li>
-    </ul>
-  <button type="button" class="btn btn-primary" ng-click="home.openModal()">New Room</button>
+      </ul>
+  <button type="button" class="btn-default" ng-click="home.openModal()"><b>New Room</b></button>
+  </div>
+    <div class="container">
+      <div class="col-md-3">
+          <h3 class="room-name-header">{{ home.currentRoom.$value }}</h3>
+            <section class="message-section">
+              <div class="messages" ng-repeat="currentMessage in home.allTheMessages track by $index">
+                <p class="alternative_cls">{{ currentMessage.username }}:  {{ currentMessage.content }}    <small>{{ currentMessage.sentAt }}</small></p>
+              </div>
+              <div ng-show="home.allTheMessages.length == 0"><b>No messages available</b></div>
+              <div ng-show="home.allTheMessages.length == 0">Feel free to add your own messages</div>
+           </section>
+    </div>
+  </div>
+    </div>
 </main>
