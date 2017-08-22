@@ -1,14 +1,19 @@
-(function() {
-    function HomeCtrl(Room, $uibModal, Message) {
-      this.rooms = Room.all;
+ (function() {
+    function HomeCtrl(Room, $uibModal, Message, $cookies) {
+        this.rooms = Room.all;
+        currentUser = $cookies.get('blocChatCurrentUser');
+        /**
+        * @function openModal
+        * @desc open modal click handler
+        */
+        this.openModal = function () {
+            $uibModal.open({
+            animation: true,
+            templateUrl: '/templates/roomModal.html',
+            controller: 'RoomCtrl as roomModal',
+            });
+        };
 
-      this.openModal = function () {
-        $uibModal.open({
-          animation: true,
-          templateUrl: '/templates/modal.html',
-          controller: 'ModalCtrl as modal',
-        });
-      };
         /**
         * @function activeRoom
         * @desc active room click handler
@@ -20,14 +25,26 @@
 
         /**
         * @function filteredMessages
-        * @desc
+        * @desc filters messages according to active room
         */
         this.filteredMessages = function(rooms) {
             this.allTheMessages = Message.getByRoomId(this.activeRoom.$id);
         };
-    }
 
+        /**
+        * @function submit message
+        * @desc submission handler
+        */
+        this.submitMessage = function() {
+            Message.send({
+                roomId: this.currentRoom.$id,
+                content: this.newMessage,
+                username: currentUser
+            });
+            this.newMessage = "";
+        };
+    }
     angular
         .module('blocChat')
-        .controller('HomeCtrl', ['Room', '$uibModal', 'Message', HomeCtrl]);
+        .controller('HomeCtrl', ['Room', '$uibModal', 'Message', '$cookies', HomeCtrl]);
 })();
